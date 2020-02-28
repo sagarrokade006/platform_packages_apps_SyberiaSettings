@@ -31,14 +31,6 @@ import android.os.UserHandle;
 import android.content.res.Resources;
 import android.widget.Toast;
 
-import androidx.preference.PreferenceCategory;
-import androidx.preference.ListPreference;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceScreen;
-import androidx.preference.Preference.OnPreferenceChangeListener;
-import androidx.preference.SwitchPreference;
->>>>>>> 9370de5... ConfigCenter: Navbar: Hide custom application preference if not in use:src/com/havoc/config/center/fragments/Buttons.java
-
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.ListPreference;
@@ -610,21 +602,21 @@ public class Buttons extends SettingsPreferenceFragment
                 || Utils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_narrow_back_nopill")
                 || Utils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_wide_back_nopill")
                 && navigationBar) {
-            homeCategory.setEnabled(false);
-            backCategory.setEnabled(false);
-            menuCategory.setEnabled(false);
-            assistCategory.setEnabled(false);
-            appSwitchCategory.setEnabled(false);
-            cameraCategory.setEnabled(false);
+            homeCategory.setVisible(false);
+            backCategory.setVisible(false);
+            menuCategory.setVisible(false);
+            assistCategory.setVisible(false);
+            appSwitchCategory.setVisible(false);
+            cameraCategory.setVisible(false);
         }
 
         if (Utils.isThemeEnabled("com.android.internal.systemui.navbar.twobutton") && navigationBar) {
             homeCategory.setEnabled(true);
             backCategory.setEnabled(true);
-            menuCategory.setEnabled(false);
-            assistCategory.setEnabled(false);
-            appSwitchCategory.setEnabled(false);
-            cameraCategory.setEnabled(false);
+            menuCategory.setVisible(false);
+            assistCategory.setVisible(false);
+            appSwitchCategory.setVisible(false);
+            cameraCategory.setVisible(false);
         }
 
         if (Utils.isThemeEnabled("com.android.internal.systemui.navbar.threebutton")) {
