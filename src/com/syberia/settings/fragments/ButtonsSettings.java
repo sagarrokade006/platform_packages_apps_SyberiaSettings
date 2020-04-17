@@ -23,9 +23,11 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemProperties;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
+import android.os.UserHandle;
 import android.content.res.Resources;
 
 import androidx.preference.Preference;
@@ -123,6 +125,9 @@ public class Buttons extends SettingsPreferenceFragment
 
     private boolean defaultToNavigationBar;
     private boolean navigationBarEnabled;
+    private boolean mIsNavSwitchingMode = false;
+
+    private Handler mHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -314,6 +319,8 @@ public class Buttons extends SettingsPreferenceFragment
             prefSet.removePreference(mCameraCategory);
         }
 
+        mHandler = new Handler();
+
         navbarCheck();
     }
 
@@ -324,10 +331,20 @@ public class Buttons extends SettingsPreferenceFragment
             Settings.Secure.putString(resolver, SYSUI_NAV_BAR, (String) objValue);
             return true;
         } else if (preference == mNavigationBar) {
-            boolean value = (Boolean) newValue;
+            boolean value = (Boolean) objValue;
+            if (mIsNavSwitchingMode) {
+                return false;
+            }
+            mIsNavSwitchingMode = true;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.FORCE_SHOW_NAVBAR, value ? 1 : 0);
             navbarCheck();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mIsNavSwitchingMode = false;
+                }
+            }, 1500);
             return true;
         } else if (preference == mBackLongPress) {
             int value = Integer.parseInt((String) objValue);
