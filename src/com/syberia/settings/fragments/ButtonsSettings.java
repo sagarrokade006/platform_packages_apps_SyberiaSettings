@@ -69,6 +69,7 @@ public class Buttons extends SettingsPreferenceFragment
     private static final String KEY_NAVIGATION_BAR_ARROWS = "navigation_bar_menu_arrow_keys";
     private static final String KEY_SWAP_NAVIGATION_KEYS = "swap_navigation_keys";
     private static final String KEY_GESTURE_SYSTEM = "gesture_system_navigation";
+    private static final String KEY_BUTTON_BRIGHTNESS = "button_brightness";
 
     private static final String KEY_BACK_LONG_PRESS_ACTION = "back_key_long_press";
     private static final String KEY_BACK_DOUBLE_TAP_ACTION = "back_key_double_tap";
@@ -112,6 +113,7 @@ public class Buttons extends SettingsPreferenceFragment
     private ListPreference mAssistLongPress;
     private ListPreference mAssistDoubleTap;
     private ListPreference mNavBarLayout;
+    private Preference mButtonBrightness;
     private Preference mGestureSystemNavigation;
     private PreferenceCategory mHomeCategory;
     private PreferenceCategory mBackCategory;
@@ -193,6 +195,8 @@ public class Buttons extends SettingsPreferenceFragment
                 Settings.System.FORCE_SHOW_NAVBAR,
                 defaultToNavigationBar ? 1 : 0) == 1));
         mNavigationBar.setOnPreferenceChangeListener(this);
+
+        mButtonBrightness = (Preference) findPreference(KEY_BUTTON_BRIGHTNESS);
 
         if (Utils.isThemeEnabled("com.android.internal.systemui.navbar.twobutton")
                 || Utils.isThemeEnabled("com.android.internal.systemui.navbar.gestural")
