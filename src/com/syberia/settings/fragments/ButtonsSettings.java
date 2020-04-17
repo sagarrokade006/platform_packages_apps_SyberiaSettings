@@ -43,6 +43,7 @@ import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
 
 import com.android.internal.logging.nano.MetricsProto;
+import com.android.internal.util.syberia.Utils;
 
 import com.syberia.settings.preference.CustomSeekBarPreference;
 
@@ -71,6 +72,7 @@ public class Buttons extends SettingsPreferenceFragment
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.buttons_settings);
         resolver = getActivity().getContentResolver();
+        final PreferenceScreen prefSet = getPreferenceScreen();
 
         mNavBarLayout = (ListPreference) findPreference(NAV_BAR_LAYOUT);
         mNavBarLayout.setOnPreferenceChangeListener(this);
@@ -79,6 +81,10 @@ public class Buttons extends SettingsPreferenceFragment
             mNavBarLayout.setValue(navBarLayoutValue);
         } else {
             mNavBarLayout.setValueIndex(0);
+        }
+
+        if (!Utils.isThemeEnabled("com.android.internal.systemui.navbar.threebutton")) {
+            prefSet.removePreference(mNavBarLayout);
         }
 
         final boolean defaultToNavigationBar = getResources().getBoolean(
